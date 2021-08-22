@@ -178,7 +178,7 @@ function initStatusPopover() {
     html: true,
   });
 
-  // Hack to force popover to grab it's content div
+  // // Hack to force popover to grab it's content div
   $('#gui_status_light').popover('show');
   $('#gui_status_light').popover('hide');
   statusPopoverDiv.show();
@@ -1138,18 +1138,18 @@ function displayMessage(elem) {
 
       if (isImageSuffix(file.Name)) {
         attachments.append(
-          '<div class="col-xs-6 col-md-3"><a class="thumbnail" target="_blank" href="' +
+          '<div class="col-xs-6 col-md-3"><a class="thumbnail" target="_blank" href="/" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-paperclip" ' +
             msg_url +
             '/' +
             file.Name +
-            '" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-paperclip"></span> ' +
+            '> ' +
             (file.Size / 1024).toFixed(2) +
             'kB' +
-            '<img src="' +
+            '' +
             msg_url +
-            '/' +
+            '<img src="/" alt="' +
             file.Name +
-            '" alt="' +
+            '' +
             file.Name +
             '">' +
             '</a></div>'
@@ -1164,11 +1164,11 @@ function displayMessage(elem) {
         );
       } else {
         attachments.append(
-          '<div class="col-xs-6 col-md-3"><a target="_blank" href="' +
+          '<div class="col-xs-6 col-md-3"><a target="_blank" href="/" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-paperclip" ' +
             msg_url +
             '/' +
             file.Name +
-            '" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-paperclip"></span> ' +
+            '> ' +
             file.Name +
             '<br>(' +
             file.Size +

@@ -9,10 +9,8 @@
 
     <title>{{.AppName}} - Mailbox</title>
 
-    <link href="/res/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/res/bootstrap-select.min.css" rel="stylesheet" />
-    <link href="/res/bootstrap-tokenfield.min.css" rel="stylesheet" />
-    <link href="/res/site.css" rel="stylesheet" />
+    <link href="/web/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="/web/assets/css/site.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -467,7 +465,7 @@
             </div>
             <div class="modal-body" id="posView">
               <p id="version">{{.AppName}} {{.Version}}</p>
-              <img src="res/images/pat_logo.png" width="35%" class="center-block" />
+              <img src='/web/assets/images/pat_logo.png' width="35%" class="center-block" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
@@ -689,13 +687,15 @@
     <!-- Bootstrap core JavaScript
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/res/js/jquery.min.js"></script>
-    <script src="/res/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
-    <script src="/res/js/bootstrap-select.min.js"></script>
-    <script src="/res/js/bootstrap-tokenfield.min.js"></script>
-    <script src="/res/js/URI.min.js"></script>
+    <script src="/web/node_modules/popper.js/dist/popper.js"></script>
+    <script src="/web/node_modules/popper.js/dist/popper-utils.js"></script>
+    <script src="/web/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/web/node_modules/bootstrap/js/dist/index.js"></script>
+    <script src="/web/node_modules/bootstrap/js/dist/util.js"></script>
+    <script src="/web/node_modules/bootstrap-tokenfield/js/bootstrap-tokenfield.js"></script>
+    <script src="/web/node_modules/bootstrap-select/js/bootstrap-select.js"></script>
     <!-- github.com/medialize/URI.js  -->
-    <script src="/res/js/index.js"></script>
+    <script src="/web/assets/js/index.js"></script>
     <script language="javascript" type="text/javascript">
       function init() {
         var wsURL = (location.protocol == 'https:' ? 'wss://' : 'ws://') + location.host + '/ws';
