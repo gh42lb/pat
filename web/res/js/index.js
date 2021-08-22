@@ -109,7 +109,7 @@ function initNotifications() {
   if (!isNotificationsSupported()) {
     statusPopoverDiv
       .find('#notifications_error')
-      .find('.panel-body')
+      .find('.card-body')
       .html('Not supported by this browser.');
     return;
   }
@@ -323,7 +323,7 @@ function initFormSelect(data) {
     $(`#formFolderRoot`).append(`
 			<h6>Form templates not configured correctly</h6>
 			<ul>
-				<li>Download templates from <a href="http://www.winlink.org/content/all_standard_templates_folders_one_zip_self_extracting_winlink_express_ver_12142016">Winlink.org</a></li>
+				<li>Download templates from <a href='http://www.winlink.org/content/all_standard_templates_folders_one_zip_self_extracting_winlink_express_ver_12142016'>Winlink.org</a></li>
 				<li>Unzip the Standard_Forms archive</li>
 				<li>Use 'pat configure' to point to the template folder. E.g.
 				    <br>on a Mac: "forms_path": "/Users/walter/.wl2k/Standard_Forms"
@@ -373,7 +373,7 @@ function appendFormFolder(rootId, data) {
   if (data.folders && data.folders.length > 0 && data.form_count > 0) {
     const rootAcc = `${rootId}Acc`;
     $(`#${rootId}`).append(`
-			<div class="accordion" id="${rootAcc}">
+			<div class='accordion' id='${rootAcc}'>
 			</div>
 			`);
     data.folders.forEach(function (folder) {
@@ -381,14 +381,14 @@ function appendFormFolder(rootId, data) {
         const folderNameId = rootId + folder.name.replace(/\s/g, '_').replace(/&/g, 'and');
         const cardBodyId = folderNameId + 'Body';
         const card = `
-				<div class="card">
-					<div class="card-header d-flex">
-						<button class="btn btn-secondary flex-fill" type="button" data-toggle="collapse" data-target="#${folderNameId}">
+				<div class='card'>
+					<div class='card-header d-flex'>
+						<button class='btn btn-secondary flex-fill' type='button' data-toggle='collapse' data-target='#${folderNameId}'>
 							${folder.name}
 						</button>
 					</div>
-					<div id="${folderNameId}" class="collapse" data-parent="#${rootAcc}">
-						<div class="card-body" id="${cardBodyId}">
+					<div id='${folderNameId}' class='collapse' data-parent='#${rootAcc}'>
+						<div class='card-body' id='${cardBodyId}'>
 						</div>
 					</div>
 				</div>
@@ -397,11 +397,11 @@ function appendFormFolder(rootId, data) {
         appendFormFolder(`${cardBodyId}`, folder);
         if (folder.forms && folder.forms.length > 0) {
           const cardBodyFormsId = `${cardBodyId}Forms`;
-          $(`#${cardBodyId}`).append(`<div id="${cardBodyFormsId}" class="list-group"></div>`);
+          $(`#${cardBodyId}`).append(`<div id='${cardBodyFormsId}' class='list-group'></div>`);
           folder.forms.forEach((form) => {
             const pathEncoded = encodeURIComponent(form.initial_uri);
             $(`#${cardBodyFormsId}`).append(
-              `<div class="list-group-item list-group-item-action list-group-item-light" onclick="onFormLaunching('/api/forms?formPath=${pathEncoded}');">${form.name}</div>`
+              `<div class='list-group-item list-group-item-action list-group-item-light' onclick="onFormLaunching('/api/forms?formPath=${pathEncoded}');">${form.name}</div>`
             );
           });
         }
@@ -611,21 +611,22 @@ function onConnectFreqChange() {
           .attr(
             'title',
             'Rigcontrol is not configured for the selected transport. Set radio frequency manually.'
-          )
-          .tooltip('fixTitle');
+          );
+        // .tooltip('fixTitle');
       } else {
         // An unexpected error occured
         [inputGroup, $('#qsyWarning')].forEach((e) => {
-          e.attr('data-toggle', 'tooltip')
-            .attr(
-              'title',
-              'Could not set radio frequency. See log output for more details and/or set the frequency manually.'
-            )
-            .tooltip('fixTitle');
+          e.attr('data-toggle', 'tooltip').attr(
+            'title',
+            'Could not set radio frequency. See log output for more details and/or set the frequency manually.'
+          );
+          // .tooltip('fixTitle');
         });
         inputGroup.addClass('has-error');
         $('#qsyWarning')
-          .html('<span class="glyphicon glyphicon-warning-sign"></span> QSY failure')
+          .html(
+            '<img class="icon" src="/res/images/iconic/warning.svg" alt="warning" /> QSY failure'
+          )
           .attr('hidden', false);
       }
     },
@@ -717,7 +718,8 @@ function previewAttachmentFiles() {
       const reader = new FileReader();
       reader.onload = function (e) {
         attachments.append(
-          '<div class="col-xs-6 col-md-3"><a class="thumbnail" href="#" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-paperclip"></span> ' +
+          '<div class="col-xs-6 col-md-3"><a class="thumbnail" href="#" class="btn btn-default navbar-btn">' +
+            '<img class="icon" src="/res/images/iconic/paperclip.svg" alt="paperclip" /> ' +
             '<img src="' +
             e.target.result +
             '" alt="' +
@@ -729,7 +731,8 @@ function previewAttachmentFiles() {
       reader.readAsDataURL(file);
     } else {
       attachments.append(
-        '<div class="col-xs-6 col-md-3"><a href="#" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-paperclip"></span> ' +
+        '<div class="col-xs-6 col-md-3"><a href="#" class="btn btn-default navbar-btn">' +
+          '<img class="icon" src="/res/images/iconic/paperclip.svg" alt="paperclip" /> ' +
           file.name +
           '<br>(' +
           file.size +
@@ -773,25 +776,33 @@ function updateStatus(data) {
         disconnect(true);
         st.tooltip('hide');
       });
-      st.attr('title', 'Click to force disconnect').tooltip('fixTitle').tooltip('show');
+      st.attr('title', 'Click to force disconnect')
+        // .tooltip('fixTitle')
+        .tooltip('show');
     });
   };
 
   if (data.dialing) {
     st.append('Dialing... ');
     st.click(onDisconnect);
-    st.attr('title', 'Click to abort').tooltip('fixTitle').tooltip('show');
+    st.attr('title', 'Click to abort')
+      // .tooltip('fixTitle')
+      .tooltip('show');
   } else if (data.connected) {
     st.append('Connected ' + data.remote_addr);
     st.click(onDisconnect);
-    st.attr('title', 'Click to disconnect').tooltip('fixTitle').tooltip('hide');
+    st.attr('title', 'Click to disconnect')
+      // .tooltip('fixTitle')
+      .tooltip('hide');
   } else {
     if (data.active_listeners.length > 0) {
       st.append('<i>Listening ' + data.active_listeners + '</i>');
     } else {
       st.append('<i>Ready</i>');
     }
-    st.attr('title', 'Click to connect').tooltip('fixTitle').tooltip('hide');
+    st.attr('title', 'Click to connect')
+      // .tooltip('fixTitle')
+      .tooltip('hide');
     st.click(() => {
       $('#connectModal').modal('toggle');
     });
@@ -800,7 +811,7 @@ function updateStatus(data) {
   const n = data.http_clients.length;
   statusPopoverDiv
     .find('#webserver_info')
-    .find('.panel-body')
+    .find('.card-body')
     .html(n + (n == 1 ? ' client ' : ' clients ') + 'connected.');
 }
 
@@ -856,21 +867,21 @@ function disconnect(dirty, successHandler) {
 function updateGUIStatus() {
   let color = 'success';
   statusPopoverDiv
-    .find('.panel-info')
+    .find('.card-info')
     .not('.hidden')
     .not('.ignore-status')
     .each(function (i) {
       color = 'info';
     });
   statusPopoverDiv
-    .find('.panel-warning')
+    .find('.card-warning')
     .not('.hidden')
     .not('.ignore-status')
     .each(function (i) {
       color = 'warning';
     });
   statusPopoverDiv
-    .find('.panel-danger')
+    .find('.card-danger')
     .not('.hidden')
     .not('.ignore-status')
     .each(function (i) {
@@ -905,8 +916,8 @@ function isInsecureOrigin() {
 }
 
 function appendInsecureOriginWarning(e) {
-  e.removeClass('panel-info').addClass('panel-warning');
-  e.find('.panel-body').append(
+  e.removeClass('card-info').addClass('card-warning');
+  e.find('.card-body').append(
     '<p>Ensure the <a href="https://github.com/la5nta/pat/wiki/The-web-GUI#powerful-features">secure origin criteria for Powerful Features</a> are met.</p>'
   );
   updateGUIStatus();
@@ -1045,7 +1056,7 @@ function displayFolder(dir) {
       let html =
         '<tr id="' + msg.MID + '" class="active' + (msg.Unread ? ' strong' : '') + '"><td>';
       if (msg.Files.length > 0) {
-        html += '<span class="glyphicon glyphicon-paperclip"></span>';
+        html += '<img class="icon" src="/res/images/iconic/paperclip.svg" alt="paperclip" />';
       }
       html += '</td><td>' + htmlEscape(msg.Subject) + '</td><td>';
       if (!is_from && !msg.To) {
@@ -1060,7 +1071,11 @@ function displayFolder(dir) {
       html += '</td>';
       html += is_from
         ? ''
-        : '<td>' + (msg.P2POnly ? '<span class="glyphicon glyphicon-ok"></span>' : '') + '</td>';
+        : '<td>' +
+          (msg.P2POnly
+            ? '<img class="icon" src="/res/images/iconic/thumbs-up.svg" alt="thumbs up" />'
+            : '') +
+          '</td>';
       html += '<td>' + msg.Date + '</td><td>' + msg.MID + '</td></tr>';
 
       const elem = $(html);
@@ -1142,7 +1157,8 @@ function displayMessage(elem) {
             msg_url +
             '/' +
             file.Name +
-            '" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-paperclip"></span> ' +
+            '" class="btn btn-default navbar-btn">' +
+            '<img class="icon" src="/res/images/iconic/paperclip.svg" alt="paperclip" /> ' +
             (file.Size / 1024).toFixed(2) +
             'kB' +
             '<img src="' +
@@ -1158,7 +1174,8 @@ function displayMessage(elem) {
         attachments.append(
           '<div class="col-xs-6 col-md-3"><a target="_blank" href="' +
             attachUrl +
-            '" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-edit"></span> ' +
+            '" class="btn btn-default navbar-btn">' +
+            '<img class="icon" src="/res/images/iconic/pencil.svg" alt="edit" /> ' +
             formName +
             '</a></div>'
         );
@@ -1168,7 +1185,8 @@ function displayMessage(elem) {
             msg_url +
             '/' +
             file.Name +
-            '" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-paperclip"></span> ' +
+            '" class="btn btn-default navbar-btn">' +
+            '<img class="icon" src="/res/images/iconic/paperclip.svg" alt="paperclip" /> ' +
             file.Name +
             '<br>(' +
             file.Size +

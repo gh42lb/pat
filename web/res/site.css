@@ -15,6 +15,10 @@ body > .container {
   outline: none !important;
 }
 
+.nav-item.active {
+  background-color: #e7e7e7;
+}
+
 .navbar-link {
   text-decoration: none !important;
 }
@@ -318,4 +322,9 @@ input[type='radio'] {
   position: sticky;
   top: 0;
   background: #eee;
+}
+
+img.icon {
+  width: 12pt;
+  height: 12pt;
 }
